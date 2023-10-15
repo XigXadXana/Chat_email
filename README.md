@@ -1,5 +1,5 @@
 ## 一个通过使用 key 处理表单并可保存每个收件人的草稿消息的简单react聊天页面<br>
-在[ key 来重置 state 在处理表单](https://zh-hans.react.dev/learn/preserving-and-resetting-state#option-2-resetting-state-with-a-key)示范代码的基础上修改<br>
+## 在[ key 来重置 state 在处理表单](https://zh-hans.react.dev/learn/preserving-and-resetting-state#option-2-resetting-state-with-a-key)示范代码的基础上修改<br>
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
