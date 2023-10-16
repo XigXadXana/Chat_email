@@ -1,9 +1,41 @@
-## 一个通过使用 key 处理表单并可保存每个收件人的草稿消息的简单react聊天页面<br>
-## 在[ key 来重置 state 在处理表单](https://zh-hans.react.dev/learn/preserving-and-resetting-state#option-2-resetting-state-with-a-key)示范代码的基础上修改<br>
+# 一个通过使用 key 处理表单并可保存每个收件人的草稿消息的简单react聊天页面<br>
+## 在[ 使用key 来重置 state 在处理表单](https://zh-hans.react.dev/learn/preserving-and-resetting-state#option-2-resetting-state-with-a-key)示范代码的基础上修改<br>
+
+## App.js代码注释：
+  1. ```javascript
+     const [to, setTo] = useState(contacts[0]);
+
+  #### 这段 JavaScript 代码使用了 React 的 `useState` 钩子来创建了一个名为 `to` 的状态变量和一个名为 `setTo` 的状态更新函数。这些状态变量用于管理一个名为 `contacts` 的数组中的数据。
+
+  
+
+  具体解释如下：
+ - `useState(contacts[0])`：这行代码通过调用 `useState` 钩子，初始化了一个状态变量 `to`，并将其初始值设置为 `contacts` 数组的第一个元素（`contacts[0]`）。
+
+  总之，这段代码的目的是在 React 组件中创建一个状态变量 `to`，并将其初始值设置为 `contacts` 数组的第一个元素，以便在组件中跟踪和操作这个值。这个状态变量可以随着组件的生命周期和用户的交互行为而改变。<br>
+  
+&nbsp;
+
+2. ```javascript
+   setDrafts({ ...drafts, [to.id]: drafts[to.id] || '' });
+
+#### 这一行代码有以下两个主要作用：
+
+  1. 复制 `drafts` 对象并更新特定字段：这行代码首先创建了一个新对象，该对象是 `drafts` 对象的浅拷贝，这是通过 `{ ...drafts }` 实现的。接着，它使用 `[to.id]` 作为键，`drafts[to.id] || ''` 作为值来更新新对象。这实际上是在复制 `drafts` 对象的同时，将指定 `to.id` 的草稿文本设置为 `drafts[to.id]` 的值，如果 `drafts[to.id]` 不存在，则将其设置为空字符串。
+
+  2. 为了在切换联系人时保存草稿：这行代码通常在切换联系人时执行。其目的是在切换到新的联系人之前，确保将当前联系人的草稿保存起来。这样，当你再次切换回该联系人时，之前输入的草稿文本仍然可用。
+
+  总之，这行代码的作用是在切换联系人之前，将当前联系人的草稿保存在 `drafts` 对象中。这有助于在不同联系人之间保持草稿的状态。
+
+  3. 在这段代码中，方括号不可以省略，因为 `[to.id]` 是一个计算属性名 (Computed Property Name)，它的目的是创建一个具有动态属性名称的对象键。这允许你在 `drafts` 对象中为每个收件人的草稿消息保存一个属性，属性名称由 `to.id` 决定。
+
+  如果省略方括号，将会尝试将整个表达式 `[to.id]: drafts[to.id] || ''` 视为对象的字面量属性名称，而不是计算属性名。这将导致语法错误，因为在对象字面量中，属性名通常是一个静态字符串。
+
+所以，方括号 `[to.id]` 在这里是必需的，以确保属性名称是根据 `to.id` 的值动态生成的。
 
 
+<br>
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
 
 ## Folder Structure
 ```
