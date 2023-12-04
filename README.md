@@ -1,37 +1,45 @@
-# 一个通过使用 key 处理表单并可保存每个收件人的草稿消息的简单react聊天页面<br>
-## 在[ 使用key 来重置 state 在处理表单](https://zh-hans.react.dev/learn/preserving-and-resetting-state#option-2-resetting-state-with-a-key)示范代码的基础上修改<br>
+# 一个通过使用 reducer处理状态的简单react聊天页面<br>
+## 自[ 此挑战]([https://zh-hans.react.dev/learn/preserving-and-resetting-state#option-2-resetting-state-with-a-key](https://zh-hans.react.dev/learn/extracting-state-logic-into-a-reducer#challenges))示范代码的基础上修改<br>
+* 通过事件处理函数 dispatch actions 使得在点击按钮时改变收件人
+* 发送消息时显示一个包含收件人电子邮件和信息的 alert 并且清空输入框
+* 切换收件人时能单独 “记住” 每个联系人的草稿，并在切换联系人时恢复
 
-## App.js代码注释：
-  1. ```javascript
-     const [to, setTo] = useState(contacts[0]);
-
-  #### 这段 JavaScript 代码使用了 React 的 `useState` 钩子来创建了一个名为 `to` 的状态变量和一个名为 `setTo` 的状态更新函数。这些状态变量用于管理一个名为 `contacts` 的数组中的数据。
-
-  
-
-  具体解释如下：
- - `useState(contacts[0])`：这行代码通过调用 `useState` 钩子，初始化了一个状态变量 `to`，并将其初始值设置为 `contacts` 数组的第一个元素（`contacts[0]`）。
-
-  总之，这段代码的目的是在 React 组件中创建一个状态变量 `to`，并将其初始值设置为 `contacts` 数组的第一个元素，以便在组件中跟踪和操作这个值。这个状态变量可以随着组件的生命周期和用户的交互行为而改变。<br>
+## Chat.js代码注释：
+  ```javascript
+     <button onClick={() =>{alert(`正在发送 "${message}" 到 ${contact.email}`);
+        dispatch({
+          type: 'edited_message',
+          message: ''
+        });
+     }}>
+  ```
+  #### 在这个例子中，${message} 会被替换为 message 变量的值，${contact.email} 则会被替换为 contact.email 变量的值。这使得你可以更轻松地构建包含变量值的字符串。在React中，如果你正在构建动态的字符串内容，你可以使用模板字符串（Template literals），它们使用反引号（）包围字符串，并允许嵌入表达式。在模板字符串中，你可以使用 ${}` 语法来插入 JavaScript 表达式或变量，这样可以更方便地构建动态字符串。
   
 &nbsp;
 
-2. ```javascript
-   setDrafts({ ...drafts, [to.id]: drafts[to.id] || '' });
+## messengerReducer.js代码注释：
+  ```javascript
+     case 'edited_message': {
+      return {
+        ...state,
+        message: {
+          ...state.message,
+          [state.selectedId]: action.message
+        }
+      };
+    }
+  ```
+#### 这段代码是 Messenger 应用中的一个 reducer 操作，处理的是动作类型为 'edited_message' 的情况。在这里，当这个动作被调用时，它返回一个新的状态对象，将当前状态中的消息部分进行更新。
 
-#### 这一行代码有以下两个主要作用：
+具体解释如下：
 
-  1. 复制 `drafts` 对象并更新特定字段：这行代码首先创建了一个新对象，该对象是 `drafts` 对象的浅拷贝，这是通过 `{ ...drafts }` 实现的。接着，它使用 `[to.id]` 作为键，`drafts[to.id] || ''` 作为值来更新新对象。这实际上是在复制 `drafts` 对象的同时，将指定 `to.id` 的草稿文本设置为 `drafts[to.id]` 的值，如果 `drafts[to.id]` 不存在，则将其设置为空字符串。
+1. { ...state }：使用展开运算符将当前状态对象中的所有属性复制到新的对象中，以确保我们不会直接修改原始状态。
 
-  2. 为了在切换联系人时保存草稿：这行代码通常在切换联系人时执行。其目的是在切换到新的联系人之前，确保将当前联系人的草稿保存起来。这样，当你再次切换回该联系人时，之前输入的草稿文本仍然可用。
+2. message: { ...state.message }：同样，我们使用展开运算符将当前消息的状态复制到新的消息对象中。
 
-  总之，这行代码的作用是在切换联系人之前，将当前联系人的草稿保存在 `drafts` 对象中。这有助于在不同联系人之间保持草稿的状态。
+3. [state.selectedId]: action.message：这一行是使用计算属性名的语法。它更新了消息对象中特定 selectedId 键所对应的值。这个 selectedId 来自当前的状态，并使用 action.message 中的内容作为更新的新值。
 
-  3. 在这段代码中，方括号不可以省略，因为 `[to.id]` 是一个计算属性名 (Computed Property Name)，它的目的是创建一个具有动态属性名称的对象键。这允许你在 `drafts` 对象中为每个收件人的草稿消息保存一个属性，属性名称由 `to.id` 决定。
-
-  如果省略方括号，将会尝试将整个表达式 `[to.id]: drafts[to.id] || ''` 视为对象的字面量属性名称，而不是计算属性名。这将导致语法错误，因为在对象字面量中，属性名通常是一个静态字符串。
-
-所以，方括号 `[to.id]` 在这里是必需的，以确保属性名称是根据 `to.id` 的值动态生成的。
+这段代码的作用是，当 'edited_message' 动作被触发时，它会将 state.selectedId 对应的消息值更新为 action.message 中的内容。这样就确保了在用户编辑消息时，它会被正确地与 selectedId 关联起来，而其他消息不受影响。
 
 
 <br>
