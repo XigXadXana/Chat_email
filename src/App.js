@@ -1,33 +1,31 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 import Chat from './Chat.js';
 import ContactList from './ContactList.js';
+import { initialState, messengerReducer } from './messengerReducer';
 
 export default function Messenger() {
-  const [to, setTo] = useState(contacts[0]);
-  const [draft, setDraft] = useState({});
-  function handleChange(e) {
-    const newDraft = {...draft};
-    newDraft[to.id] = e.target.value;
-    setDraft(newDraft);
-  }
+  const [state, dispatch] = useReducer(messengerReducer, initialState);
+  const message = state.message[state.selectedId];
+  const contact = contacts.find((c) => c.id === state.selectedId);
   return (
     <div>
       <ContactList
         contacts={contacts}
-        selectedContact={to}
-        onSelect={contact => {
-          setDraft({...draft, [to.id]: draft[to.id] || ''});
-          setTo(contact);
-        }
-      }
+        selectedId={state.selectedId}
+        dispatch={dispatch}
       />
-      <Chat key={to.id} contact={to} content={draft[to.id] || ''} onChange={handleChange} />
+      <Chat
+        key={contact.id}
+        message={message}
+        contact={contact}
+        dispatch={dispatch}
+      />
     </div>
-  )
+  );
 }
 
 const contacts = [
-  { id: 0, name: 'Taylor', email: 'taylor@mail.com' },
-  { id: 1, name: 'Alice', email: 'alice@mail.com' },
-  { id: 2, name: 'Bob', email: 'bob@mail.com' }
+  {id: 0, name: 'Taylor', email: 'taylor@mail.com'},
+  {id: 1, name: 'Alice', email: 'alice@mail.com'},
+  {id: 2, name: 'Bob', email: 'bob@mail.com'},
 ];

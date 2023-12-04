@@ -46,11 +46,13 @@ ul {
   padding-inline-start: 20px;
 }
 
-.chat, .contact-list {
+.chat,
+.contact-list {
   float: left;
   margin-bottom: 20px;
 }
-ul, li {
+ul,
+li {
   list-style: none;
   margin: 0;
   padding: 0;

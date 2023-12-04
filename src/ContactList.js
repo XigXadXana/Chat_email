@@ -1,20 +1,20 @@
-export default function ContactList({
-  selectedContact,
-  contacts,
-  onSelect
-}) {
+export default function ContactList({contacts, selectedId, dispatch}) {
   return (
     <section className="contact-list">
       <ul>
-        {contacts.map(contact =>
+        {contacts.map((contact) => (
           <li key={contact.id}>
-            <button onClick={() => {
-              onSelect(contact);
-            }}>
-              {contact.name}
+            <button
+              onClick={() => {
+                dispatch({
+                  type: 'changed_selection',
+                  contactId: contact.id,
+                });// TODO: dispatch changed_selection
+              }}>
+              {selectedId === contact.id ? <b>{contact.name}</b> : contact.name}
             </button>
           </li>
-        )}
+        ))}
       </ul>
     </section>
   );
