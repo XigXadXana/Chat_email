@@ -1,4 +1,5 @@
-# 一个通过使用 key 处理表单并可保存每个收件人的草稿消息的简单react聊天页面<br>
+一个通过使用 key 处理表单并可保存每个收件人的草稿消息的简单react聊天页面<br>
+==========================
 ### 在[ 使用key 来重置 state 在处理表单](https://zh-hans.react.dev/learn/preserving-and-resetting-state#option-2-resetting-state-with-a-key)示范代码的基础上修改
 ### 实现保存聊天信息草稿并允许用户即使关闭页面也能恢复草稿<br>
 ## App.js代码注释：
