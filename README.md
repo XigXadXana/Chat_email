@@ -41,19 +41,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Folder Structure
 ```
 my-app/
-  README.md
-  node_modules/
-  package.json
-  public/
-    index.html
-    favicon.ico
   src/
-    App.css
+    public/
     App.js
-    App.test.js
-    index.css
+    Chat.js
+    ContactList.js
+    creatServiceWorker.js
     index.js
-    logo.svg
+    package.json
+    styles.css
+  package.json
+  README.md
+    
 ```
 
 For the project to build, **these files must exist with exact filenames**:
