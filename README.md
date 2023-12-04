@@ -1,4 +1,5 @@
-# 一个通过使用 reducer处理状态的简单react聊天页面<br>
+一个通过使用 reducer处理状态的简单react聊天页面<br>
+==========================
 ## 自[ 此挑战]([https://zh-hans.react.dev/learn/preserving-and-resetting-state#option-2-resetting-state-with-a-key](https://zh-hans.react.dev/learn/extracting-state-logic-into-a-reducer#challenges))示范代码的基础上修改<br>
 * 通过事件处理函数 dispatch actions 使得在点击按钮时改变收件人
 * 发送消息时显示一个包含收件人电子邮件和信息的 alert 并且清空输入框
