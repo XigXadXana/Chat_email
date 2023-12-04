@@ -39,7 +39,16 @@
 
 3. [state.selectedId]: action.message：这一行是使用计算属性名的语法。它更新了消息对象中特定 selectedId 键所对应的值。这个 selectedId 来自当前的状态，并使用 action.message 中的内容作为更新的新值。
 
-这段代码的作用是，当 'edited_message' 动作被触发时，它会将 state.selectedId 对应的消息值更新为 action.message 中的内容。这样就确保了在用户编辑消息时，它会被正确地与 selectedId 关联起来，而其他消息不受影响。
+当 'edited_message' 动作被触发时，它会将 state.selectedId 对应的消息值更新为 action.message 中的内容。这样就确保了在用户编辑消息时，它会被正确地与 selectedId 关联起来，而其他消息不受影响。在这个特定的情况下，state.selectedId 应该是一个数字或字符串，用来表示消息的键（可能是联系人的ID）。在这种情况下，使用方括号 [state.selectedId] 而不是点号 .selectedId，是为了以 selectedId 变量的值作为属性名，将 action.message 存储在新状态中的特定键下。
+
+举个例子，如果 state.selectedId 的值为 1，那么 [state.selectedId] 就等价于 [1]，这样就会将 action.message 存储在状态中键为 1 的位置。
+
+这种方法允许你动态地使用变量值作为对象的键，以实现更灵活的状态更新。
+
+
+
+
+
 
 
 <br>
@@ -47,20 +56,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Folder Structure
 ```
-my-app/
-  README.md
-  node_modules/
-  package.json
-  public/
-    index.html
-    favicon.ico
   src/
-    App.css
+    public/
     App.js
-    App.test.js
-    index.css
+    Chat.js
+    ContactList.js
+    creatServiceWorker.js
     index.js
-    logo.svg
+    messengerReducer.js
+    package.json
+    styles.css
+  package.json
+  README.md
+    
 ```
 
 For the project to build, **these files must exist with exact filenames**:
